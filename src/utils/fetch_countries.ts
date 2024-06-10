@@ -1,18 +1,22 @@
 const REST_CONTRIES_API = 'https://restcountries.com/v3.1/all';
 
-interface Country {
+export interface Country {
+  countryName: string;
   countryCode: string;
   dialingCode: string;
-  flag: string;
+  emojiFlag: string;
+  svgFlag: string;
 }
 
 const mapResponseToUsableType = (countries: Array<any>): Array<Country> => {
   return countries.map((country) => {
-    const { cca2, flag, idd } = country;
+    const { cca2, flag, idd, name, flags } = country;
     return {
+      countryName: name.common,
       countryCode: cca2,
       dialingCode: `${idd.root}${idd.suffixes}`,
-      flag,
+      emojiFlag: flag,
+      svgFlag: flags.svg,
     };
   });
 };
